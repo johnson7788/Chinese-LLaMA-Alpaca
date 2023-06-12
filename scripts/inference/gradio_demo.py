@@ -2,6 +2,10 @@ import sys
 import gradio as gr
 import argparse
 import os
+import torch
+from transformers import LlamaForCausalLM, LlamaTokenizer, GenerationConfig,AutoModelForCausalLM,AutoTokenizer
+from peft import PeftModel
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--base_model', default=None, type=str, required=True)
@@ -18,9 +22,6 @@ if args.only_cpu is True:
     args.gpus = ""
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpus
 
-import torch
-from transformers import LlamaForCausalLM, LlamaTokenizer, GenerationConfig
-from peft import PeftModel
 
 generation_config = dict(
     temperature=0.2,
@@ -40,9 +41,9 @@ if args.tokenizer_path is None:
     args.tokenizer_path = args.lora_model
     if args.lora_model is None:
         args.tokenizer_path = args.base_model
-tokenizer = LlamaTokenizer.from_pretrained(args.tokenizer_path)
+tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_path)
 
-base_model = LlamaForCausalLM.from_pretrained(
+base_model = AutoModelForCausalLM.from_pretrained(
     args.base_model, 
     load_in_8bit=load_in_8bit,
     torch_dtype=load_type,
