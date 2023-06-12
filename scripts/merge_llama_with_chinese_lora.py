@@ -1,4 +1,10 @@
 """
+版本必须是这样的：
+!pip install torch==1.13.1
+!pip install transformers==4.28.1
+!pip install peft==0.3.0
+!pip install sentencepiece
+
 Usage: 
 python merge_llama_with_chinese_lora.py \
     --base_model path/to/llama/model \
@@ -256,7 +262,7 @@ if __name__=='__main__':
         print(f"Loading LoRA {lora_model_path}...")
         tokenizer = LlamaTokenizer.from_pretrained(lora_model_path)
         print(f"base_model vocab size: {base_model.get_input_embeddings().weight.size(0)}")
-        print(f"tokenizer vocab size: {len(tokenizer)}")
+        print(f"lora tokenizer vocab size: {len(tokenizer)}")
 
         model_vocab_size = base_model.get_input_embeddings().weight.size(0)
         assert len(tokenizer) >= model_vocab_size, \

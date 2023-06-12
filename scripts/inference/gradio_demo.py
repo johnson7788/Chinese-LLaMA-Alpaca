@@ -28,7 +28,7 @@ generation_config = dict(
     top_p=0.9,
     do_sample=True,
     num_beams=1,
-    repetition_penalty=1.1,
+    repetition_penalty=1.5,
     max_new_tokens=400
     )
 load_type = torch.float16
