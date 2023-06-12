@@ -2,3 +2,5 @@
 */.DS_Store
 *.ipynb
 */*.ipynb
+data/cosmetic
+data/valid.json
